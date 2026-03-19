@@ -1,8 +1,3 @@
-const del = indexedDB.deleteDatabase("UnityCache");
-del.onsuccess = () => console.log("UnityCache deleted");
-del.onerror = () => console.error("Failed to delete UnityCache");
-del.onblocked = () => console.warn("Delete blocked — close other tabs");
-
 const siteConfig = {
   "veck.io": {
     mainScript: "https://cdn.jsdelivr.net/gh/suppressfinallygotgh/mytheory@main/veck.js",
