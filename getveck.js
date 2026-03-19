@@ -1,19 +1,13 @@
-async function loadAndRun() {
-  try {
-    const response = await fetch("https://raw.githubusercontent.com/suppressfinallygotgh/smashkarts/refs/heads/main/veck.js?1=" + Date.now());
+const URL = "https://cdn.jsdelivr.net/gh/suppressfinallygotgh/smashkarts@main/veck.js";
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+fetch(URL)
+  .then(r => r.text())
+  .then(code => {
+    try {
+      // Works even under strict CSP
+      Function(code)();
+    } catch (e) {
+      console.error(e);
     }
-
-    const code = await response.text();
-
-    const script = document.createElement("script");
-    script.textContent = code;
-    document.documentElement.appendChild(script);
-  } catch (error) {
-    console.error("Fetch error:", error);
-  }
-}
-
-loadAndRun();
+  })
+  .catch(console.error);
