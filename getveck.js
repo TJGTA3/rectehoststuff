@@ -17,21 +17,20 @@ if (!config) {
   const versionUrl = `${config.metadata}?t=${Date.now()}`;
   const mainUrl = `${config.mainScript}?t=${Date.now()}`;
 
-function loadScript(url) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = url;
-    script.onload = () => {
-      console.log(`Loaded script: ${url}`);
-      resolve();
-    };
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
+  async function fetchAndRun(scriptUrl) {
+    if (!scriptUrl) return;
+    try {
+      const res = await fetch(scriptUrl);
+      const code = await res.text();
+      Function(code)();
+      console.log(`Executed script: ${scriptUrl}`);
+    } catch (e) {
+      console.error(`Error fetching/executing ${scriptUrl}:`, e);
+    }
+  }
+
+  (async () => {
+    await fetchAndRun(versionUrl);
+    await fetchAndRun(mainUrl);
+  })();
 }
-
-(async () => {
-  await loadScript(versionUrl);
-  await loadScript(mainUrl);
-})();
-
