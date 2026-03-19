@@ -32,7 +32,7 @@ if (!config) {
   }
 
   (async () => {
-    await loadScript(versionUrl);
+    //await loadScript(versionUrl);
     await loadScript(mainUrl);
   })();
 }
